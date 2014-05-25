@@ -1,3 +1,5 @@
+%%% brain - отвечает за обработку входящего сообщения.
+
 -module(brain).
 -on_load(switch_on/0).
 
@@ -14,15 +16,21 @@ switch_on()->
 	if
 		node() =:= nonode@nohost ->
 			net_kernel:start([?me, shortnames]),
-			io:format("Brain is switched on.~n");
+			mnesia:create_schema([node()]),
+			mnesia:start(),
+			io:format("Мозг включён.~n");
+			%io:format("Brain is enabled.~n");
 		true ->
-			io:format("Brain have already been switched on.~n")
+			io:format("Невозможно включить Мозг, т.к. он уже запущен.~n")
+			%io:format("Brain is already enabled.~n")
 	end.
 
 %%% Убирает имя ноды. (Прекращает доступ к сети)
 switch_off()->
 	net_kernel:stop(),
-	io:format("Brain is switched off.~n").
+	mnesia:stop(),
+	io:format("Мозг отключен.~n").
+	%io:format("Brain is disabled.~n").
 
 %%% Отправляет входную строку на оброботку
 % Input string

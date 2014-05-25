@@ -1,3 +1,5 @@
+%%% output - отвечает за вывод информации на экран.
+
 -module(output).
 -export([print/1]).
 
