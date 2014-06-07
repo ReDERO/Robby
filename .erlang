@@ -1,0 +1,3 @@
+%file:set_cwd("D:Robby").
+compile:file("sources/brain.erl").
+code:load_file(brain).
